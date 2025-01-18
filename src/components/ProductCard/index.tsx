@@ -31,6 +31,7 @@ export function ProductCard({ product }: ProductCardProps) {
         const response = await addToCart({
           variables: { product: addingProduct, userId },
         });
+        alert("Item Added")
         console.log('Product added to cart:', response.data);
       } catch (err) {
         console.error('Error adding product to cart:', err);

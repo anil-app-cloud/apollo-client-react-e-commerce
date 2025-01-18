@@ -52,6 +52,7 @@ export function SignUp() {
         //console.log('User created:', response.data.createUser);
 
         setLogin(true);
+        localStorage.setItem("user", JSON.stringify(response.data.createUser))
         setUserOf(response.data.createUser)
         navigate('/');
 

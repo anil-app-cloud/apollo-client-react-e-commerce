@@ -36,9 +36,11 @@ export function Login() {
     if (data) {
       if (data.getUserById !== null) {
         setLogin(true);
+        console.log('user Data:', data.getUserById);
+        localStorage.setItem("user", JSON.stringify(data.getUserById))
         setUserOf(data.getUserById)
         navigate('/');
-        console.log('Data:', data.getUserById);
+        
       } else {
         setErrorMessage('User Not Found');
       }

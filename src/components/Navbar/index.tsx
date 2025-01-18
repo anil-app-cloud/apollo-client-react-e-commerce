@@ -7,12 +7,11 @@ import './index.css';
 export function Navbar() {
   const {isLogin, setLogin, user} = useContext(AppContext)
 
-//   console.log("active user", user)
 
   const handleLogout = () => {
+    localStorage.removeItem("user")
     setLogin(false);
   };
-  //console.log("from navbar ", isLogin)
 
   return (
     <nav className="navbar">

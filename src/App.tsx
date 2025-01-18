@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSubscription, gql } from '@apollo/client';
@@ -10,6 +10,7 @@ import { Home } from './pages/Home';
 import { Cart } from './pages/Cart';
 import { Login } from './pages/Login';
 import { SignUp } from './pages/SignUp';
+import ProtectedRoute from './components/ProtectedRoute'; 
 
 // Subscription query
 const PRODUCT_UPDATE_SUBSCRIPTION = gql`
@@ -23,13 +24,16 @@ const PRODUCT_UPDATE_SUBSCRIPTION = gql`
 `;
 
 function App() {
+  const [isAnyUpdates, setIsAnyUpdates] = useState(false)
   const { data, error, loading } = useSubscription(PRODUCT_UPDATE_SUBSCRIPTION, {
     onSubscriptionData: ({ subscriptionData }) => {
       console.log('Subscription data received:', subscriptionData);
       if (subscriptionData.data) {
         const product = subscriptionData.data.productUpdate;
         console.log('Product update:', product);
+        
         toast.success(`New product added: ${product.name} (₹${product.price})`);
+        setIsAnyUpdates(prev => !prev)
       }
     },
     onError: (error) => {
@@ -52,12 +56,16 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50" >
         <Navbar />
         <ToastContainer />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/" element={<Home key={isAnyUpdates}/>} />
+          <Route path="/cart" element={
+            <ProtectedRoute>
+              <Cart key={isAnyUpdates}/>
+            </ProtectedRoute>
+          } />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>

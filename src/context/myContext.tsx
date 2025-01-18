@@ -27,8 +27,11 @@ interface AppProviderProps {
 }
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-  const [isLogin, setIsLogin] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null)
+  const userIs = JSON.parse(localStorage.getItem("user"))
+  console.log("user form context ", userIs)
+  const [isLogin, setIsLogin] = useState<boolean>(userIs === null? false: true);
+  const [user, setUser] = useState<User | null>(userIs === null? null: userIs)
+
 
  
   const setLogin: React.Dispatch<React.SetStateAction<boolean>> = (value) => {
