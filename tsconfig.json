@@ -1,0 +1,16 @@
+{
+  "files": [],
+  "compilerOptions": {
+    "jsx": "react",   // ensures JSX is correctly processed
+    "moduleResolution": "node", // Resolves module imports correctly
+    "esModuleInterop": true,    // Ensures compatibility with default imports
+    "allowJs": true,    // Allows JavaScript files in your project
+    "strict": true,     // Optional, ensures strict type checking
+    "module": "esnext", // Ensures correct handling of modules
+    "target": "esnext"
+  },
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
